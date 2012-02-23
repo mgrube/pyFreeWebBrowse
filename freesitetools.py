@@ -31,6 +31,24 @@ def createFreesite(sitemgr, sitename, sitedir):
 	sitemgr.addSite(name=sitename, dir=sitedir, uriPub=uriPub, uriPriv=uriPriv)
 	print "Added new freesite: '%s' => %s" % (sitename, sitedir)
 
+
+# update a freesite
+def updateFreesite(sitemgr, sitename):
+	if not sitemgr.node:
+		raise Exception("Cannot connect to node on %s:%s" % (sitemgr.fcpHost, sitemgr.fcpPort))
+	sitemgr.insert(sitename)
+
+
+# get list of names of freesites
+def getFreesiteNames(sitemgr):
+	sites = [site.name for site in sitemgr.sites]
+	names = []
+	for sitename in sites:
+		if sitemgr.hasSite(sitename):
+			names.append(site.name)
+	return names
+
+
 if __name__ == "__main__":
 	sitemgr = SiteMgr()
 	sitename = "fwb-test"
@@ -43,4 +61,20 @@ if __name__ == "__main__":
 		os.makedirs(sitedir)
 	urllib.urlretrieve("https://secure.wikimedia.org/wikipedia/en/wiki/Main_Page", sitedir + "/index.html")
 	createFreesite(sitemgr, sitename, sitedir)
+
+	sitemgr = SiteMgr()
+	urllib.urlretrieve("https://secure.wikimedia.org/wikipedia/en/wiki/Main_Page", sitedir + "/index.html")
+	updateFreesite(sitemgr, sitename)
+
+	sitemgr = SiteMgr()
+	print getFreesiteNames(sitemgr)
+
+	#try:
+		#sitemgr.node.shutdown()
+	#except:
+		#try:
+			#sitemgr.node.socket.close()
+		#except:
+			#pass
+		#pass
 
