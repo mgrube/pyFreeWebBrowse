@@ -29,7 +29,7 @@ def createFreesite(sitemgr, sitename, sitedir):
 	uriPriv = fixUri(uriPriv, sitename)
 
 	sitemgr.addSite(name=sitename, dir=sitedir, uriPub=uriPub, uriPriv=uriPriv)
-	print "Added new freesite: '%s' => %s" % (sitename, sitedir)
+	return uriPub
 
 
 # update a freesite
@@ -60,7 +60,8 @@ if __name__ == "__main__":
 	if not os.path.exists(sitedir):
 		os.makedirs(sitedir)
 	urllib.urlretrieve("https://secure.wikimedia.org/wikipedia/en/wiki/Main_Page", sitedir + "/index.html")
-	createFreesite(sitemgr, sitename, sitedir)
+	uriPub = createFreesite(sitemgr, sitename, sitedir)
+	print "Created freesite at: " + uriPub
 
 	sitemgr = SiteMgr()
 	urllib.urlretrieve("https://secure.wikimedia.org/wikipedia/en/wiki/Main_Page", sitedir + "/index.html")
