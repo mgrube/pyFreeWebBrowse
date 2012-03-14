@@ -24,17 +24,17 @@ try:
 	f = open('rules.conf', 'r')
 	f_text = f.read()
 	f.close()
-	rulesList = json.loads(f_text)
+	rules = json.loads(f_text)
 except IOError as e:
-	rulesList = []
+	rules = {}
 
-rule = {"url": url, "allow_any": allowAny, "allow_list": allowList}
+rule = {"allow_any": allowAny, "allow_list": allowList}
 
 # append new rule to rules list
-rulesList.append(rule)
+rules[url] = rule
 
 # write new rules list to disk
-text = json.dumps(rulesList)
+text = json.dumps(rules)
 f = open('rules.conf', 'w')
 f.write(text)
 f.close()

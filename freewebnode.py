@@ -13,14 +13,14 @@ class FreeWebNode:
 		except IOError as e:
 			self.friendList = []
 
-	def loadRulesList(self):
+	def loadRules(self):
 		try:
 			f = open('rules.conf', 'r')
 			f_text = f.read()
 			f.close()
-			self.rulesList = json.loads(f_text)
+			self.rules = json.loads(f_text)
 		except IOError as e:
-			self.rulesList = []
+			self.rules = {}
 
 	def checkAllFriendRequests(self):
 		for friend in self.friendList:
@@ -28,11 +28,12 @@ class FreeWebNode:
 				self.checkRequestPage(friend['key'])
 		pass
 
-	def checkRequestPage(self, requestUri):
-		# fetch page at requestUri
+	def checkRequestPage(self, requestPageUri):
+		# fetch page at requestPageUri
 		# parse request list
 		# for each request
-			# fulfillRequest(url)
+			# if rules allow it,
+				# fulfillRequest(url)
 		pass
 
 	def fulfillRequest(self, url):
@@ -45,7 +46,7 @@ if __name__ == "__main__":
 	# test
 	node = FreeWebNode()
 	node.loadFriendList()
-	node.loadRulesList()
+	node.loadRules()
 	node.checkAllFriendRequests()
 	pass
 
