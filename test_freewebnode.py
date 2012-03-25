@@ -22,7 +22,8 @@ class TestFreeWebNode(unittest.TestCase):
 		self.freewebnode.checkAllFriendRequests()
 
 	def test_checkRequestPage(self):
-		self.freewebnode.checkRequestPage('Bob')
+		friend = {'name': 'Bob', 'key': '12345'}
+		self.freewebnode.checkRequestPage(friend)
 
 	def test_checkRules(self):
 		allowed = self.freewebnode.checkRules('Bob', 'http://en.wikipedia.org/')

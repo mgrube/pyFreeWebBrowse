@@ -1,6 +1,9 @@
 *.pyc
+*.swp
 friends.conf
 rules.conf
 fwb-test
+fwb-temp
 fwb-requests
+fwb-fulfill
 

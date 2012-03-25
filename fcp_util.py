@@ -23,10 +23,12 @@ def fcp_get(key_uri):
 	mimetype, data, msg = n.get(key_uri)
 	n.shutdown()
 
-	return data
+	return mimetype, data, msg
 
 if __name__ == "__main__":
 	key_uri = "USK@nwa8lHa271k2QvJ8aa0Ov7IHAV-DFOCFgmDt3X6BpCI,DuQSUZiI~agF8c-6tjsFFGuZ8eICrzWCILB60nT8KKo,AQACAAE/sone/51/"
-	data = fcp_get(key_uri)
-	print data
+	mimetype, data, msg = fcp_get(key_uri)
+	print 'mimetype:', mimetype
+	print 'data:', data
+	print 'msg:', msg
 

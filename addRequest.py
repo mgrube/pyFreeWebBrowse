@@ -28,7 +28,7 @@ def addRequest(url):
 	try:
 		os.makedirs('fwb-requests')	# create folder
 	except OSError, e:
-		if e.errno != errno.EEXIST:	# folder already exists, np
+		if e.errno != errno.EEXIST:	# folder already exists
 			raise
 	f = open('fwb-requests/requests.json', 'w')
 	f.write(text)
