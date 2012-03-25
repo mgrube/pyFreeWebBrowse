@@ -1,0 +1,6 @@
+*.pyc
+friends.conf
+rules.conf
+fwb-test
+fwb-requests
+
