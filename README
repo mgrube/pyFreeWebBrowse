@@ -1,2 +1,24 @@
-Depends on pyFreenet, which can be cloned from here:
-https://github.com/freenet/lib-pyFreenet-staging
+pyFreeWebBrowse: Browse the web using Freenet!
+
+Installation steps:
+
+1. Install and run Freenet from https://freenetproject.org/.
+
+2. Install pyFreenet:
+$ git clone https://github.com/freenet/lib-pyFreenet-staging
+$ cd lib-pyFreenet-staging
+$ sudo python setup.py install
+
+3. Add a request for a web URL you would like someone to upload to Freenet.
+$ ./addRequest.py www.google.com
+
+Note that currently, only single pages with static content can be uploaded.
+
+4. After the request is created, it will say "Published request to:" and list a Freenet key. Send this key to any other Freenet users who are willing to retrieve web content for you. Your request key is also saved in request-key.txt.
+
+5. Add keys for anyone for whom you are willing to retrieve web content.
+$ ./addFriend
+
+6. Add rules to specify which friends can request pages, and what web URLs they can request from.
+$ ./addRule
+
