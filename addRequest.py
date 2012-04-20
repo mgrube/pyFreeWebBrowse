@@ -4,7 +4,7 @@ import sys, time, json
 import os, errno
 
 from freesitetools import *
-from fcp.sitemgr import SiteMgr, fixUri
+from fcp.sitemgr import SiteMgr
 
 # add a request for a web site to be uploaded to freenet
 def addRequest(url):

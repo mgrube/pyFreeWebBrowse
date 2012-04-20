@@ -48,7 +48,12 @@ class FreeWebNode:
 		for request in requestList:
 			requestUrl = request[u'url']
 			if checkRules(friend[u'name'], requestUrl):
-				fulfillRequest(requestUrl)
+				uriPub = fulfillRequest(requestUrl)
+		if uriPub != None:
+			f = open('fulfill-key.txt', 'w')
+			f.write(uriPub)
+			f.close()
+
 			# TODO: forward this request to other friends if not fulfilled here?
 		pass
 
@@ -96,10 +101,11 @@ class FreeWebNode:
 			uriPub = createFreesite(sitemgr, sitename, sitedir)
 
 		# publish fulfillment list
+		fsitename = 'fwb-fulfill'
 
 		# read current fulfill list
 		try:
-			f = open('fwb-fulfill/fulfill.json', 'r')
+			f = open(fsitename + '/fulfill.json', 'r')
 			f_text = f.read()
 			f.close()
 			fulfillList = json.loads(f_text)
@@ -121,16 +127,40 @@ class FreeWebNode:
 		# write new fulfill list to disk
 		text = json.dumps(fulfillList)
 		try:
-			os.makedirs('fwb-fulfill')	# create folder
+			os.makedirs(fsitename)		# create folder
 		except OSError, e:
 			if e.errno != errno.EEXIST:	# folder already exists
 				raise
-		f = open('fwb-fulfill/fulfill.json', 'w')
+		f = open(fsitename + '/fulfill.json', 'w')
 		f.write(text)
 		f.close()
 
-		# TODO: add or update freesite for fulfill list
-		pass
+		# add index if it doesn't already exist
+		try:
+			f = open(fsitename + '/index.html', 'r')
+		except IOError as e:
+			f = open(fsitename + '/index.html', 'w')
+			f.write('''
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+        <title>pyFreeWebBrowse Fulfill Page</title>
+</head>
+
+<body>
+        <a href="fulfill.json">Fulfilled Requests</a>
+</body>
+</html>
+				''')
+			f.close()
+
+		# add or update freesite for fulfill list
+		if fsitename in getFreesiteNames(sitemgr):
+			updateFreesite(sitemgr, fsitename)
+		else:
+			uriPub = createFreesite(sitemgr, fsitename, fsitename)
+			return uriPub
+
 
 if __name__ == "__main__":
 	# test
